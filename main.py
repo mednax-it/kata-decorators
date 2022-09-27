@@ -1,3 +1,12 @@
+from typing import Callable
+
+
+def trace(func: Callable) -> None:
+    print(f'🤖: function called')
+    func()
+    print(f'🤖: function returning')
+
+
 def hello() -> None:
     '''
     Says hello to the world.
@@ -6,7 +15,8 @@ def hello() -> None:
     '''
     print(f"👋: Hello, world!")
 
-hello()
+
+trace(hello)
 print('---')
 print(f'Function name: {hello.__name__}')
 print(f'Function docstring: {hello.__doc__}')
