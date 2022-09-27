@@ -1,16 +1,15 @@
 from typing import Callable
 
+from decorator import decorator
 
-def trace(enabled=False) -> None:
-    def outer(func: Callable):
-        def inner(*args, **kwargs):
-            if enabled:
-                print(f'🤖: function called')
-            func(*args, **kwargs)
-            if enabled:
-                print(f'🤖: function returning')
-        return inner
-    return outer
+
+@decorator
+def trace(func: Callable, enabled=False, *args, **kwargs) -> None:
+    if enabled:
+        print(f'🤖: function called')
+    func(*args, **kwargs)
+    if enabled:
+        print(f'🤖: function returning')
 
 
 @trace(enabled=True)
