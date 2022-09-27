@@ -1,15 +1,19 @@
 from typing import Callable
 
 
-def trace(func: Callable) -> None:
-    def inner(*args, **kwargs):
-        print(f'🤖: function called')
-        func(*args, **kwargs)
-        print(f'🤖: function returning')
-    return inner
+def trace(enabled=False) -> None:
+    def outer(func: Callable):
+        def inner(*args, **kwargs):
+            if enabled:
+                print(f'🤖: function called')
+            func(*args, **kwargs)
+            if enabled:
+                print(f'🤖: function returning')
+        return inner
+    return outer
 
 
-@trace
+@trace(enabled=True)
 def hello(name: str) -> None:
     '''
     Says hello to the world.
